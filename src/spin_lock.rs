@@ -30,7 +30,7 @@ impl<T> SpinLock<T> {
     }
 
     /// Safety relies on &mut T not being used anymore
-    pub fn unlock(&self) {
+    pub(crate) fn unlock(&self) {
         self.is_locked.store(false, Ordering::Release)
     }
 }

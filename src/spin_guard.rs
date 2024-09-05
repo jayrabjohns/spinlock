@@ -1,7 +1,4 @@
-use std::{
-    ops::{Deref, DerefMut},
-    sync::atomic::Ordering,
-};
+use std::ops::{Deref, DerefMut};
 
 use crate::spin_lock::SpinLock;
 
@@ -14,7 +11,7 @@ unsafe impl<T> Sync for SpinGuard<'_, T> where T: Sync {}
 
 impl<T> Drop for SpinGuard<'_, T> {
     fn drop(&mut self) {
-        self.lock.is_locked.store(false, Ordering::Release)
+        self.lock.unlock()
     }
 }
 
